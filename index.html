@@ -419,7 +419,7 @@
                             &#125;;
 
                             // HTML
-                            &#60;button ng-click="fetchData()">Fetch Data&#60;/button&#62;
+                            &#60;button ng-click="fetchData()">GET adatok lekérése&#60;/button&#62;
                             &#60;div ng-if="jsonData"&#62;
                                 &#60;h2>JSON Data:&#60;/h2&#62;
                                 &#60;pre>&#123;&#123; jsonData | json &#125;&#125;&#60;/pre&#62;
@@ -448,7 +448,7 @@
                         
                           return (
                             &#60;div&#62;
-                                &#60;button class="btn btn-primary" onClick={fetchData}>Fetch Data&#60;/button&#62;
+                                &#60;button class="btn btn-primary" onClick={fetchData}>GET adatok lekérése&#60;/button&#62;
                               {jsonData && &#123;
                                 &#60;div&#62;
                                 &#60;h2>JSON Data:&#60;/h2&#62;
@@ -503,8 +503,8 @@
                             // HTML
                             &#60;div>
                                 &#60;h1>Counter: &#123; &#123; count &#125; &#125; &#60;/h1&#62;
-                                &#60;button class="btn btn-primary" ng-click="increment()">Increment&#60;/button&#62;
-                                &#60;button class="btn btn-primary" ng-click="decrement()">Decrement&#60;/button&#62;
+                                &#60;button class="btn btn-primary" ng-click="increment()">Növelés&#60;/button&#62;
+                                &#60;button class="btn btn-primary" ng-click="decrement()">Csökkentés&#60;/button&#62;
                             &#60;/div&#62;
                         </code>
                     </pre>
@@ -529,8 +529,8 @@
                           return (
                             &#60;div&#62;
                                 &#60;h1>Counter: {count}&#60;/h1&#62;
-                                &#60;button class="btn btn-primary" onClick={increment}>Increment&#60;/button&#62;
-                                &#60;button class="btn btn-primary" onClick={decrement}>Decrement&#60;/button&#62;
+                                &#60;button class="btn btn-primary" onClick={increment}>Növelés&#60;/button&#62;
+                                &#60;button class="btn btn-primary" onClick={decrement}>Csökkentés&#60;/button&#62;
                             &#60;/div&#62;
                           );
                         };
@@ -685,6 +685,370 @@
                             <button class="btn btn-primary" ng-click="addTodo()">Hozzáadás</button>
                         </div>
                     </div>   
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center lead my-3 fw-bold">Dinamikus űrlap generálás</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 my-auto">
+                    <pre class="language-javascript">
+                        <code>
+                            // Javascript
+                            $scope.formFields = [
+                                  { id: 1, label: 'Name', type: 'text' },
+                                  { id: 2, label: 'Email', type: 'email' },
+                                  { id: 3, label: 'Password', type: 'password' },
+                                ];
+                                // HTML
+                            &#60;form class="mx-auto"&#62;
+                                &#60;input  id="{ {fField.id} }" placeholder="{ {fField.label} }" type="{ {fField.type} }" ng-repeat="fField in formFields"&#62;
+                            &#60;/form&#62;
+                        </code>
+                    </pre>
+                </div>
+                <div class="col-6 my-auto">
+                    <pre class="language-javascript">
+                        <code>
+                            // .ts file
+                            import React, { useState } from 'react';
+                                const DynamicForm = () => {
+                                const [formFields, setFormFields] = useState([
+                                    &#123; id: 1, label: 'Name', type: 'text' &#125;,
+                                    &#123; id: 2, label: 'Email', type: 'email' &#125;,
+                                    &#123; id: 3, label: 'Password', type: 'password' &#125;,
+                                ]);
+
+                                return (
+                                    &#60;form className="mx-auto"&#62;
+                                    {formFields.map(field => (
+                                        &#60;div key={field.id}&#62;
+                                        &#60;label>{field.label}&#60;/label&#62;
+                                        &#60;input type={field.type} /&#62;
+                                        &#60;/div&#62;
+                                    ))}
+                                    &#60;/form&#62;
+                                );
+                            };
+
+                            export default DynamicForm;
+
+                        </code>
+                    </pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center lead my-3">Eredmény</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 ">
+                   <form>
+                        <input class="mx-auto" style="display:block;" ng-repeat="fField in formFields" type="{{fField.id}}" placeholder="{{fField.label}}" type="{{fField.type}}">
+                   </form>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-12">
+                    <p class="text-center lead my-3 fw-bold">Számológép készítése</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 my-auto">
+                    <pre class="language-javascript">
+                        <code>
+                            // Javascript
+                            $scope.input = '';
+                            $scope.result = '';
+                          
+                            $scope.handleButtonClick = function (value) &#123;
+                              $scope.input += value;
+                            &#125;;
+                          
+                            $scope.handleCalculate = function () &#123;
+                              try &#123;
+                                $scope.result = eval($scope.input).toString();
+                              &#125; catch (error) &#123;
+                                $scope.result = 'Error';
+                              &#125;
+                            &#125;;
+                          
+                            $scope.handleClear = function () &#123;
+                              $scope.input = '';
+                              $scope.result = '';
+                            &#125;;
+                            // HTML
+                          &#60;div&#62;
+                            &#60;input type="text" ng-model="input" ng-readonly="true" /&#62;
+                          &#60;/div&#62;
+                          &#60;div&#62;
+                            &#60;button ng-click="handleButtonClick('1')"&#62;1&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('2')"&#62;2&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('3')"&#62;3&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('+')"&#62;+&#60;/button&#62;
+                          &#60;/div&#62;
+                          &#60;div&#62;
+                            &#60;button ng-click="handleButtonClick('4')"&#62;4&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('5')"&#62;5&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('6')"&#62;6&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('-')"&#62;-&#60;/button&#62;
+                          &#60;/div&#62;
+                          &#60;div&#62;
+                            &#60;button ng-click="handleButtonClick('7')"&#62;7&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('8')"&#62;8&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('9')"&#62;9&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('*')"&#62;*&#60;/button&#62;
+                          &#60;/div&#62;
+                          &#60;div&#62;
+                            &#60;button ng-click="handleButtonClick('0')"&#62;0&#60;/button&#62;
+                            &#60;button ng-click="handleCalculate()"&#62;=&#60;/button&#62;
+                            &#60;button ng-click="handleClear()"&#62;C&#60;/button&#62;
+                            &#60;button ng-click="handleButtonClick('/')"&#62;/&#60;/button&#62;
+                          &#60;/div&#62;
+                          &#60;div&#62;
+                            &#60;p&#62;Result: { { result } }&#60;/p&#62;
+                          &#60;/div&#62;
+
+                        </code>
+                    </pre>
+                </div>
+                <div class="col-6 my-auto">
+                    <pre class="language-javascript">
+                        <code>
+                            // .ts file
+                            import React, { useState } from "react";
+                            const Calculator = () =&#62; {
+                            const [input, setInput] = useState("");
+                            const [result, setResult] = useState("");
+
+                            const handleButtonClick = (value) =&#62; {
+                                setInput((prevInput) =&#62; prevInput + value);
+                            };
+
+                            const handleCalculate = () =&#62; {
+                                try {
+                                setResult(eval(input).toString());
+                                } catch (error) {
+                                setResult("Error");
+                                }
+                            };
+
+                            const handleClear = () =&#62; {
+                                setInput("");
+                                setResult("");
+                            };
+
+                            return (
+                                &#60;div&#62;
+                                &#60;div&#62;
+                                    &#60;input type="text" value={input} readOnly /&#62;
+                                &#60;/div&#62;
+                                &#60;div&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("1")}&#62;1&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("2")}&#62;2&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("3")}&#62;3&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("+")}&#62;+&#60;/button&#62;
+                                &#60;/div&#62;
+                                &#60;div&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("4")}&#62;4&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("5")}&#62;5&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("6")}&#62;6&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("-")}&#62;-&#60;/button&#62;
+                                &#60;/div&#62;
+                                &#60;div&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("7")}&#62;7&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("8")}&#62;8&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("9")}&#62;9&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("*")}&#62;*&#60;/button&#62;
+                                &#60;/div&#62;
+                                &#60;div&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("0")}&#62;0&#60;/button&#62;
+                                    &#60;button onClick={handleCalculate}&#62;=&#60;/button&#62;
+                                    &#60;button onClick={handleClear}&#62;C&#60;/button&#62;
+                                    &#60;button onClick={() =&#62; handleButtonClick("/")}&#62;/&#60;/button&#62;
+                                &#60;/div&#62;
+                                &#60;div&#62;
+                                    &#60;p&#62;Result: {result}&#60;/p&#62;
+                                &#60;/div&#62;
+                                &#60;/div&#62;
+                            );
+                            };
+
+                            export default Calculator;
+
+
+                        </code>
+                    </pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center lead my-3">Eredmény</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div>
+                        <input type="text" ng-model="input" ng-readonly="true" />
+                      </div>
+                      <div>
+                        <button ng-click="handleButtonClick('1')">1</button>
+                        <button ng-click="handleButtonClick('2')">2</button>
+                        <button ng-click="handleButtonClick('3')">3</button>
+                        <button ng-click="handleButtonClick('+')">+</button>
+                      </div>
+                      <div>
+                        <button ng-click="handleButtonClick('4')">4</button>
+                        <button ng-click="handleButtonClick('5')">5</button>
+                        <button ng-click="handleButtonClick('6')">6</button>
+                        <button ng-click="handleButtonClick('-')">-</button>
+                      </div>
+                      <div>
+                        <button ng-click="handleButtonClick('7')">7</button>
+                        <button ng-click="handleButtonClick('8')">8</button>
+                        <button ng-click="handleButtonClick('9')">9</button>
+                        <button ng-click="handleButtonClick('*')">*</button>
+                      </div>
+                      <div>
+                        <button ng-click="handleButtonClick('0')">0</button>
+                        <button ng-click="handleCalculate()">=</button>
+                        <button ng-click="handleClear()">C</button>
+                        <button ng-click="handleButtonClick('/')">/</button>
+                      </div>
+                      <div>
+                        <p>Result: {{result}}</p>
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center lead my-3 fw-bold">Kő, papír, olló</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 my-auto">
+                    <pre class="language-javascript">
+                        <code>
+                            // Javascript
+                            $scope.options = ['Rock', 'Paper', 'Scissors'];
+                            $scope.userChoice = '';
+                            $scope.computerChoice = '';
+                            $scope.gameResult = '';
+
+                            $scope.handleUserChoice = function (choice) &#123;
+                            const computerRandomChoice = $scope.options[Math.floor(Math.random() * $scope.options.length)];
+                            $scope.userChoice = choice;
+                            $scope.computerChoice = computerRandomChoice;
+                            $scope.calculateResult(choice, computerRandomChoice);
+                            &#125;;
+
+                            $scope.calculateResult = function (user, computer) &#123;
+                            if (user === computer) &#123;
+                                $scope.gameResult = 'Döntetlen!';
+                            &#125; else if (
+                                (user === 'Rock' && computer === 'Scissors') ||
+                                (user === 'Paper' && computer === 'Rock') ||
+                                (user === 'Scissors' && computer === 'Paper')
+                            ) &#123;
+                                $scope.gameResult = 'Nyertél!';
+                            &#125; else &#123;
+                                $scope.gameResult = 'A gép nyert!';
+                            &#125;
+                            &#125;;
+                            // HTML
+                            &#60;h2&#62;Kő, papír, olló&#60;/h2&#62;
+                            &#60;div&#62;
+                                &#60;button ng-repeat="option in options" ng-click="handleUserChoice(option)"&#62;
+                                    { { option } }
+                                &#60;/button&#62;
+                                &#60;/div&#62;
+                                &#60;div&#62;
+                                &#60;p&#62;Te választottad: { { userChoice } }&#60;/p&#62;
+                                &#60;p&#62;A gép választotta: { { computerChoice } }&#60;/p&#62;
+                                &#60;p&#62;eredmény: { { gameResult } }&#60;/p&#62;
+                            &#60;/div&#62;
+                        </code>
+                    </pre>
+                </div>
+                <div class="col-6 my-auto">
+                    <pre class="language-javascript">
+                        <code>
+                            // .ts file
+                            import React, &#123; useState &#125; from 'react';
+                            const options = ['Rock', 'Paper', 'Scissors'];
+
+                            const RPSGame = () =&#62; &#123;
+                            const [userChoice, setUserChoice] = useState('');
+                            const [computerChoice, setComputerChoice] = useState('');
+                            const [result, setResult] = useState('');
+
+                            const handleUserChoice = (choice) =&#62; &#123;
+                                const computerRandomChoice = options[Math.floor(Math.random() * options.length)];
+                                setUserChoice(choice);
+                                setComputerChoice(computerRandomChoice);
+                                calculateResult(choice, computerRandomChoice);
+                            &#125;;
+
+                            const calculateResult = (user, computer) =&#62; &#123;
+                                if (user === computer) &#123;
+                                setResult('Döntetlen!');
+                                &#125; else if (
+                                (user === 'Rock' && computer === 'Scissors') ||
+                                (user === 'Paper' && computer === 'Rock') ||
+                                (user === 'Scissors' && computer === 'Paper')
+                                ) &#123;
+                                setResult('Nyertél!!');
+                                &#125; else &#123;
+                                setResult('A gép nyert!');
+                                &#125;
+                            &#125;;
+
+                            return (
+                                &#60;div&#62;
+                                &#60;h2&#62;Kő, papír, olló&#60;/h2&#62;
+                                &#60;div&#62;
+                                    &#123;options.map((option) =&#62; (
+                                    &#60;button key=&#123;option&#125; onClick=&#123;() =&#62; handleUserChoice(option)&#125;&#62;
+                                        &#123;option&#125;
+                                    &#60;/button&#62;
+                                    ))&#125;
+                                &#60;/div&#62;
+                                &#60;div&#62;
+                                    &#60;p&#62;Te választottad: &#123;userChoice&#125;&#60;/p&#62;
+                                    &#60;p&#62;A gép választotta: &#123;computerChoice&#125;&#60;/p&#62;
+                                    &#60;p&#62;&#123;gameResult&#125;&#60;/p&#62;
+                                &#60;/div&#62;
+                                &#60;/div&#62;
+                            );
+                            &#125;;
+
+                            export default RPSGame;
+
+                        </code>
+                    </pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center lead my-3">Eredmény</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2>Kő, papír, olló</h2>
+                    <div>
+                        <button ng-repeat="option in options" ng-click="handleUserChoice(option)">
+                            {{ option }}
+                        </button>
+                        </div>
+                        <div>
+                        <p>Te választottad:{{userChoice}} </p>
+                        <p>A gép választotta:{{computerChoice}} </p>
+                        <p>eredmény: {{gameResult}}</p>
+                    </div>
                 </div>
             </div>
         </div>
